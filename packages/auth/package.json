@@ -1,0 +1,25 @@
+{
+  "name": "@kiraquest/auth",
+  "type": "module",
+  "exports": {
+    ".": {
+      "default": "./src/index.ts"
+    },
+    "./*": {
+      "default": "./src/*.ts"
+    }
+  },
+  "scripts": {
+    "check-types": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@kiraquest/db": "workspace:*",
+    "autumn-js": "catalog:",
+    "better-auth": "catalog:",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@kiraquest/config": "workspace:*",
+    "typescript": "catalog:"
+  }
+}
