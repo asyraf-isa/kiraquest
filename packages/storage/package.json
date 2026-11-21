@@ -10,7 +10,7 @@
     "check-types": "tsc --noEmit"
   },
   "dependencies": {
-    "files-sdk": "^2.4.1"
+    "files-sdk": "^3.2.0"
   },
   "devDependencies": {
     "@kiraquest/config": "workspace:*",
