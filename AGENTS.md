@@ -21,11 +21,13 @@ KiraQuest AI is a Malaysian primary school Mathematics (KSSR) web application fo
 - evlog request logging
 - Ultracite linting/formatting (v8)
 - Lefthook git hooks
+- Landing page with KSSR curriculum presentation & interactive demo
+- Direct registration & login UI (`/auth`) for Parents and Teachers
+- Removed scaffolded dark-mode components (`mode-toggle.tsx`, `theme-provider.tsx`) — project is light-mode only
 
 #### 🔲 Not Started
 - Math engine (`apps/web/src/lib/math-engine/`)
 - AI tutor — `@google/genai` not yet installed, no Gemini API key in env
-- Landing page & waitlist (`WaitlistLead` model not yet in schema)
 - Practice screen & scratchpad canvas
 - Gamification (stars, streaks, badges, progress map)
 - Parent/teacher dashboards & child profiles
@@ -35,7 +37,7 @@ KiraQuest AI is a Malaysian primary school Mathematics (KSSR) web application fo
 ### Strict MVP Scope (Weeks 1–6)
 
 Build ONLY these features during MVP:
-1. Landing page + waitlist form (`WaitlistLead` model, Weeks 1–2 validation gate).
+1. Landing page + user registration/login flow (Parents & Teachers).
 2. Deterministic question engine (`apps/web/src/lib/math-engine/`) covering **2 topics** (*Pecahan, Perpuluhan & Peratus* — 1 Darjah 5 topic, 1 Darjah 6 topic, ~25 templates per topic).
 3. 3-tier Gemini AI hint tutor with Postgres caching, daily quota enforcement, and MYR cost logging.
 4. Mobile-first practice screen with an on-screen HTML5 `<canvas>` scratchpad.
@@ -47,7 +49,6 @@ Build ONLY these features during MVP:
 ### Out of Scope — DO NOT BUILD (Deferred to Phase 2)
 
 Do NOT scaffold, suggest, or install dependencies for:
-- Rive animations, custom avatars, or binary file uploads
 - Speed Mode, full UASA exam simulations, PBD TP exports, or PKSK prep modules
 - Full BM/BI (DLP) language toggle
 - RAG / vector search pipelines (use curated static Topic Cards until >6 topics exist)
@@ -63,7 +64,8 @@ Do NOT scaffold, suggest, or install dependencies for:
 - **Runtime & Package Manager:** `bun` (never use `npm`, `yarn`, or `pnpm`)
 - **Framework:** **Next.js** (App Router) + TypeScript (`strict: true`)
 - **Monorepo:** **Turborepo** — the project is a monorepo with workspaces under `apps/` and `packages/`
-- **Design System & Styling:** **Shadcn UI** (`https://ui.shadcn.com/`) + Tailwind CSS + Framer Motion (lightweight transitions only)
+- **Design System & Styling:** **Shadcn UI** (`https://ui.shadcn.com/`) + Tailwind CSS + Framer Motion (gamification transitions, interactive quest maps, celebrations, and animated AI mascot)
+- **Gamification & Animation:** Framer Motion + Canvas Confetti + interactive animated SVG avatars & Rive support for kid-friendly engagement
 - **Database & ORM:** PostgreSQL (Neon) + Prisma 7 (pinned to `~7.10.x` — do NOT upgrade to Prisma 8)
 - **Auth:** Better Auth (Email + Google login for parents and teachers only)
 - **API Layer:** tRPC (end-to-end type-safe APIs) + TanStack Query
@@ -151,7 +153,7 @@ kiraquest/
 │   └── web/                    # Next.js App Router application
 │       └── src/
 │           ├── app/
-│           │   ├── (marketing)/        # Landing page, pricing, waitlist (TODO)
+│           │   ├── (marketing)/        # Landing page, pricing
 │           │   ├── (auth)/             # Better Auth login/signup (TODO: rename auth/)
 │           │   ├── (app)/              # Parent dashboard, practice view, teacher dashboard (TODO)
 │           │   ├── api/auth/           # Better Auth API handler
@@ -246,7 +248,6 @@ Core models (to be created):
 * `QuestionAttempt` (`childId`, `templateId`, `topic`, `isCorrect`, `hintsUsed`, `createdAt`)
 * `HintCache` (`templateId`, `errorType`, `hintLevel`, `hintTextBm`, unique composite key)
 * `AiUsageLog` (`userId`, `childId?`, `model`, `inputTokens`, `outputTokens`, `estimatedCostMyr`, `createdAt`)
-* `WaitlistLead` (`email`, `whatsapp?`, `childGrade`, `utmSource?`, `createdAt`)
 
 Already scaffolded by Better Auth: `User`, `Session`, `Account`, `Verification` (in `auth.prisma`).
 
